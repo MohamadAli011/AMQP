@@ -1,0 +1,20 @@
+#Consumer
+import pika
+url = 'amqps://bqnpmbjb:lnpCxdFf-q7KsTZF0nkI5RKUkMxlaCTb@chimpanzee.rmq.cloudamqp.com/bqnpmbjb'
+params = pika.URLParameters(url)
+connection = pika.BlockingConnection(params)
+channel = connection.channel()
+channel.queue_declare(queue='Testing')
+def callback(ch, method, properties, body):
+    print( " [x] Received %r" %(body))
+channel.basic_consume(callback, queue='Testing', no_ack=True)
+cahnnel.start_consuming()
+
+-------------------------------------------------------------------
+#Publish
+import pika
+url = 'amqps://bqnpmbjb:lnpCxdFf-q7KsTZF0nkI5RKUkMxlaCTb@chimpanzee.rmq.cloudamqp.com/bqnpmbjb'
+params = pika.URLParameters(url)
+connection = pika.BlockingConnection(params)
+channel = connection.channel()
+channel.basic_publish(exchange='', routing_key='Testing',body='Hello world')
